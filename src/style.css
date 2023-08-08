@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Comic Neue', cursive;
+}
+
+li {
+  list-style: none;
+}
+
+.leaderboard-container {
+  margin-top: 10%;
+  margin-left: 30%;
+  display: flex;
+  gap: 40px;
+}
+
+.recent-score-button {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#scores {
+  border: 2px solid black;
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.title-two {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+
+.score-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+input {
+  padding: 3px;
+  border: 2px solid black;
+}
+
+input::placeholder {
+  font-family: 'Comic Neue', cursive;
+  color: black;
+}
+
+.sb-btn {
+  position: relative;
+  left: 125px;
+  margin-top: 20px;
+}
+
+button {
+  background: #fff;
+  border-bottom: 3px solid black;
+  border-right: 3px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
