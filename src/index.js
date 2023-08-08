@@ -1,15 +1,14 @@
-import _ from 'lodash';
-import './style.css';
+import { getLeaderboardData } from './leaderboard.js';
 
-function component() {
-    const element = document.createElement('div');
-  
-    // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
+const leaderboardList = document.getElementById('leaderboard-list');
 
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+function renderLeaderboard() {
+  const data = getLeaderboardData();
+  data.forEach((entry, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${entry.name}: ${entry.score}`;
+    leaderboardList.appendChild(listItem);
+  });
+}
+
+renderLeaderboard();
