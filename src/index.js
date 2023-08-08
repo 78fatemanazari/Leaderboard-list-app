@@ -1,14 +1,19 @@
-import { getLeaderboardData } from './leaderboard.js';
+import './style.css';
+import { refreshScores, submitScore } from './leaderboard';
 
-const leaderboardList = document.getElementById('leaderboard-list');
+const scoresContainer = document.getElementById('scores');
+const refreshButton = document.querySelector('.rf-btn');
+const submitButton = document.querySelector('.sb-btn');
+const nameInput = document.querySelector('.score-input input:nth-child(1)');
+const scoreInput = document.querySelector('.score-input input:nth-child(2)');
 
-function renderLeaderboard() {
-  const data = getLeaderboardData();
-  data.forEach((entry, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${index + 1}. ${entry.name}: ${entry.score}`;
-    leaderboardList.appendChild(listItem);
-  });
-}
+refreshButton.addEventListener('click', () => {
+  refreshScores(scoresContainer);
+});
 
-renderLeaderboard();
+submitButton.addEventListener('click', () => {
+  submitScore(nameInput, scoreInput, scoresContainer);
+  refreshScores(scoresContainer);
+});
+
+refreshScores(scoresContainer);
