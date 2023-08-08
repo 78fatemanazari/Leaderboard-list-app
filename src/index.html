@@ -6,17 +6,24 @@
   <title>Leaderboard App</title>
 </head>
 <body>
-  <header>
-    <h1>Leaderboard</h1>
-  </header>
-  <main>
-    <section id="leaderboard-section">
-      <ul id="leaderboard-list"></ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2023 Leaderboard App</p>
-  </footer>
-  <script src="dist/bundle.js"></script>
+  <div class="leaderboard-container">
+    <div class="score-container">
+      <h1 class="title-one">Leaderboard</h1>
+      <div class="recent-score-button">
+        <p>Recent Scores</p>
+        <button type="submit" class="rf-btn">Refresh</button>
+      </div>
+      <div id="scores"></div>
+    </div>
+    <div class="input-score-container">
+      <h3 class="title-two">Add your Score</h3>
+      <div class="score-input">
+        <input type="text" placeholder="Your name">
+        <input type="text" placeholder="Your Score">
+      </div>
+      <button type="submit" class="sb-btn">Submit</button>
+    </div>
+  </div>
+  <script src="main.js"></script>
 </body>
 </html>
