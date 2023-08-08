@@ -1,15 +1,19 @@
-import _ from 'lodash';
 import './style.css';
+import { refreshScores, submitScore } from './leaderboard';
 
-function component() {
-    const element = document.createElement('div');
-  
-    // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
+const scoresContainer = document.getElementById('scores');
+const refreshButton = document.querySelector('.rf-btn');
+const submitButton = document.querySelector('.sb-btn');
+const nameInput = document.querySelector('.score-input input:nth-child(1)');
+const scoreInput = document.querySelector('.score-input input:nth-child(2)');
 
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+refreshButton.addEventListener('click', () => {
+  refreshScores(scoresContainer);
+});
+
+submitButton.addEventListener('click', () => {
+  submitScore(nameInput, scoreInput, scoresContainer);
+  refreshScores(scoresContainer);
+});
+
+refreshScores(scoresContainer);
