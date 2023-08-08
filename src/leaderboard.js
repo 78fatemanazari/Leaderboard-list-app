@@ -1,9 +1,45 @@
-const leaderboardData = [
-    { name: "Player 1", score: 100 },
-    { name: "Player 2", score: 150 },
-    { name: "Player 3", score: 75 },
-    ];
+function refreshScores(scoresContainer) {
+  scoresContainer.innerHTML = '';
 
-    export function getLeaderboardData() {
-    return leaderboardData;
+  const scores = JSON.parse(localStorage.getItem('scores')) || [];
+
+  scores.forEach((score) => {
+    const listContainer = document.createElement('ul');
+    const lists = document.createElement('li');
+    const listItem = document.createElement('p');
+
+    listItem.textContent = `${score.name}: ${score.score}`;
+
+    lists.appendChild(listItem);
+    listContainer.appendChild(lists);
+    scoresContainer.appendChild(listContainer);
+  });
 }
+
+function submitScore(nameInput, scoreInput, scoresContainer) {
+  return new Promise((resolve, reject) => {
+    const name = nameInput.value;
+    const score = scoreInput.value;
+
+    if (name && score) {
+      const newScore = { name, score };
+
+      const scores = JSON.parse(localStorage.getItem('scores')) || [];
+
+      scores.push(newScore);
+
+      localStorage.setItem('scores', JSON.stringify(scores));
+
+      nameInput.value = '';
+      scoreInput.value = '';
+
+      refreshScores(scoresContainer);
+
+      resolve();
+    } else {
+      reject(new Error('Name and score must be provided'));
+    }
+  });
+}
+
+export { refreshScores, submitScore };
