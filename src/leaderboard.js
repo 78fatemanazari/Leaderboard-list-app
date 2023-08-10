@@ -1,4 +1,4 @@
-async function refreshScores(scoresContainer, gameId) {
+const refreshScores = async (scoresContainer, gameId) => {
   scoresContainer.innerHTML = '';
 
   const response = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameId}/scores`);
@@ -15,9 +15,9 @@ async function refreshScores(scoresContainer, gameId) {
     listContainer.appendChild(lists);
     scoresContainer.appendChild(listContainer);
   });
-}
+};
 
-async function submitScore(nameInput, scoreInput, scoresContainer, gameId) {
+const submitScore = async (nameInput, scoreInput, scoresContainer, gameId) => {
   const name = nameInput.value;
   const score = scoreInput.value;
 
@@ -43,9 +43,9 @@ async function submitScore(nameInput, scoreInput, scoresContainer, gameId) {
       console.error('Failed to submit score.');
     }
   }
-}
+};
 
-async function createGame() {
+const createGame = async () => {
   const response = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
     method: 'POST',
     headers: {
@@ -56,6 +56,6 @@ async function createGame() {
 
   const gameData = await response.json();
   return gameData.result;
-}
+};
 
 export { refreshScores, submitScore, createGame };
