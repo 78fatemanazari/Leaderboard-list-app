@@ -1,14 +1,15 @@
-function refreshScores(scoresContainer) {
+async function refreshScores(scoresContainer, gameId) {
   scoresContainer.innerHTML = '';
 
-  const scores = JSON.parse(localStorage.getItem('scores')) || [];
+  const response = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameId}/scores`);
+  const scoresData = await response.json();
 
-  scores.forEach((score) => {
+  scoresData.result.forEach((score) => {
     const listContainer = document.createElement('ul');
     const lists = document.createElement('li');
     const listItem = document.createElement('p');
 
-    listItem.textContent = `${score.name}: ${score.score}`;
+    listItem.textContent = `${score.user}: ${score.score}`;
 
     lists.appendChild(listItem);
     listContainer.appendChild(lists);
@@ -16,30 +17,45 @@ function refreshScores(scoresContainer) {
   });
 }
 
-function submitScore(nameInput, scoreInput, scoresContainer) {
-  return new Promise((resolve, reject) => {
-    const name = nameInput.value;
-    const score = scoreInput.value;
+async function submitScore(nameInput, scoreInput, scoresContainer, gameId) {
+  const name = nameInput.value;
+  const score = scoreInput.value;
 
-    if (name && score) {
-      const newScore = { name, score };
+  if (name && score) {
+    const data = {
+      user: name,
+      score: parseInt(score, 10),
+    };
 
-      const scores = JSON.parse(localStorage.getItem('scores')) || [];
+    const response = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameId}/scores`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-      scores.push(newScore);
-
-      localStorage.setItem('scores', JSON.stringify(scores));
-
+    if (response.ok) {
       nameInput.value = '';
       scoreInput.value = '';
-
-      refreshScores(scoresContainer);
-
-      resolve();
+      await refreshScores(scoresContainer, gameId); // Refresh the scores after submitting
     } else {
-      reject(new Error('Name and score must be provided'));
+      console.error('Failed to submit score.');
     }
-  });
+  }
 }
 
-export { refreshScores, submitScore };
+async function createGame() {
+  const response = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name: 'YourGameName' }), // Replace 'YourGameName' with your desired game name
+  });
+
+  const gameData = await response.json();
+  return gameData.result;
+}
+
+export { refreshScores, submitScore, createGame };
